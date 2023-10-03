@@ -192,16 +192,384 @@
 //}
 #pragma endregion 
 
-#pragma region 비교연산
-#include<iostream>
-#include <climits>
-using namespace std;
+#pragma region 비트단위연산 잘모르는것!!!(복습)
+//#include<iostream>
+//#include <climits>
+//using namespace std;
+//
+//
+//int main()
+//{
+//	// 비트단위 연산자
+//	// 언제 필요한가(사실 많이는 없음)
+//	// 비트 단위의 조작이 필요할때
+//	// 대표적으로 BitFlag
+//
+//	// ~ : bitwise not
+//	// 단일 숫자의 모든 비트 대상으로, 0은1, 1은 0으로 뒤바뀜
+//	// 0b1001 -> ob0110
+//
+//	// & bitwise and
+//	// 두 숫자의 모든 비트 쌍을 대상으로, and연산
+//	// 0b1100 & 0b1010 -> 0b1000
+//
+//	// | bitwise or
+//	// 두 숫자의 모든 비트 쌍을 대상으로, or연산 -> 둘중 하나라도 1이면 1. 
+//	// 0b1100 & 0b1010 -> 0b1110
+//
+//	// ^ bitwise xor
+//	// 두 숫자의 모든 비트 쌍을 대상으로, xor연산 -> 두숫자가 같으면 0, 다르면 1
+//	// 두번 xor연산하면 숫자 원상복구
+//	// int a = 1; int b = 123; a ^ b 두번하면 다시 원상복구 -> 암호학에서 많이 쓰임
+//
+//	// << 비트 좌측 이동
+//	// 비트열을 N만큼 왼쪽으로 이동
+//	// 왼쪽의 넘치는 N개의 비트는 버린다, 새로 생성되는 n개의 비트는 0으로 채워짐.
+//	// *2를 할 때 자주 보이는 패턴 (한칸씩 왼쪽갈때 2곱해짐)
+//
+//	// >> 비트 우측 이동
+//	// 비트열을 N만큼 오른쪽으로 이동
+//	// 오른쪽에 넘치는 n개의 비트는 버림.
+//	// 왼쪽 생성되는 n개의 비트는
+//	// - 부호 비트가 존재할 경우 부호 비트를 따라감(부호있는 정수라면 이 부분 유의)
+//	// - 아니면 0
+//
+//	// 실습 (bitFlag)
+//	// 0b0000 [무적][변이][스턴][공중부양] // 각자 bool로 만들어도 되지만 상태가 엄청 많다면 ?
+//	// bitflag는 웬만하면 unsigned 형으로 -> 음수가 딸려올수 있음
+//	unsigned char flag;
+//
+//	// 무적 상태로 만든다.
+//	flag = (1 << 3); // 8로 기억하기 힘듦.
+//
+//	// 변이상태를 추가한다 (무적 + 변이)
+//	flag |= (1 << 2);
+//
+//	// 무적인지 확인하고 싶다면 //bitmask(필요없는 정보 날릴 수 있음)
+//	bool isInvincible = ((flag & (1 << 3)) != 0);
+//
+//	// 무적이거나 스턴 상태인지 확인하고 싶다면?
+//	bool mask = (1 << 3) | (1 << 1);
+//	bool isInvinOrStunned = ((flag & mask) != 0);
+//
+//	return 0;
+//}
 
+#pragma endregion
+
+#pragma region 상수 메모리영역
+//#include<iostream>
+//using namespace std;
+//
+//// 한번 정해지면 절대 바뀌지 않을 값들
+//// constant약자인 const (상수화)
+//
+//// 그러면 const도 바뀌지 않는 읽기전용이면 .rodata영역? 
+//// 사실 C++ 표준에서 그렇게 하라는 말이 없음.
+//const int AIR = 0;
+//const int STUN = 1;
+//const int POLYMORPH = 2;
+//const int INVINCIBLE = 3; // INVINCIBLE = 4 <- 불가능 // const는 반드시 초기화 해줘야함 const int INVINCIBLE; 불가능
+//
+//// 전역변수 [데이터영역]
+//// .data (초기값 있는 경우)
+//int a = 2;
+//// .bss (초기값 없는 경우)
+//int b;
+//// .rodata (읽기 전용 데이터) (READONLY)
+//const char* msg = "Hello World!";
+//
+//int main()
+//{
+//	// 지역 변수 [스택영역]
+//	int c = 3;
+//
+//}
+#pragma endregion
+
+#pragma region 유의사항
+//#include<iostream>
+//using namespace std;
+////유의사항
+//// 1)스택 괄호범위. 같은이름 변수 x
+//// 2) 연산 우선순위 -> ()사용!
+//// 3) 타입변환  -> 캐스팅.. 손실발생가능
+//// 4) 사칙연산 관련 
+//
+//int main()
+//{
+//	int hp = 123;
+//	cout << hp << endl;
+//
+//	// 캐스팅(바구니교체)
+//	short hp2 = (short)hp; // 윗쪽 비트 데이터가 짤린 상태로 저장.
+//	float hp3 = (float)hp; // 실수로 변환할 대 정밀도 차이가 있기 때문에 데이터 손실.
+//	unsigned hp4 = (unsigned int)hp; // 비트단위는 데이터 똑같은데, 분석하는 방법이 달라져서..
+//
+//	// 곱셈
+//	// - 오버플로우 -> 자료형(ex) int)이 표현할 수 있는 숫자 넘어설 수 있음
+//	// 너무 큰값을 곱할때 조심
+//
+//	// 나눗셈
+//	// - 0나누기 조심!!!
+//	// - 실수(float) 관련
+//
+//	int maxHp = 1000;
+//	float ratio = hp / maxHp; // int / int 는 int로 생각됨. 
+//	// float/int or int / float => float으로 인식!
+//	return 0;
+//}
+
+#pragma endregion
+
+#pragma region 조건문
+//#include<iostream>
+//using namespace std;
+//
+//int main()
+//{
+//	const int ROCK = 0;
+//	const int PAPER = 1;
+//	const int SCISSORS = 2;
+//
+//	int input = ROCK;
+//
+//	switch (input) // 정수계열만 넣을 수 있음
+//	{
+//	case ROCK:
+//		cout << "주먹을 냈습니다" << endl;
+//		break;
+//	case SCISSORS:
+//		cout << "가위를 냈습니다" << endl;
+//		break;
+//	case PAPER:
+//		cout << "보를 냈습니다" << endl;
+//		break;
+//	default:
+//		cout << "뭘 낸것입니까??" << endl;
+//		break;
+//	}
+//
+//	return 0;
+//}
+//
+#pragma endregion
+
+#pragma region 반복문(별찍기)
+//#include<iostream>
+//#include<vector>
+//using namespace std;
+//
+//int main()
+//{
+//	// 별찍기)
+//	// 유저들이 어떤 정수를 입력하면
+//	// N*N개의 별을 찍었으면 좋겠어요
+//	//int input;
+//	//cin >> input;
+//
+//	//for (int i = 0; i < input; i++)
+//	//{
+//	//	for (int j = 0; j < input; j++)
+//	//	{
+//	//		cout << '*';
+//	//	}
+//	//	cout << endl;
+//	//}
+//
+//	// 별찍기2)
+//	// 1개부터 시작해서 순차적으로 줄마다 증가하게 수정해주세요!
+//	//int input; cin >> input;
+//	//
+//	//for (int i = 0 ; i < input; i++)
+//	//{
+//	//	for (int j = 0; j < i + 1; j++)
+//	//	{
+//	//		cout << '*';
+//	//	}
+//	//	cout << endl;
+//	//}
+//
+//	// 별찍기3)
+//	// n개부터 시작해서 줄마다 1개씩 줄어드는 형태로!
+//	// 
+//	/*int input; cin >> input;
+//	for (int i = 0 ; i < input; i++)
+//	{
+//		for (int j = 0; j < input - i; j++)
+//		{
+//			cout << '*';
+//		}
+//
+//		cout << endl;
+//	}*/
+//
+//
+//	// 구구단)
+//	// 2단부터 9단까지 구구단을 출력해주세요
+//	//
+//	/*for(int i = 2; i<=9; i++)
+//	{
+//		for (int j = 1; j <= 9; j++)
+//		{
+//			cout << i << " * " << j << " = " << i * j << endl;
+//		}
+//		cout << i << "단 끝!" << endl;
+//	}*/
+//	return 0;
+//}
+
+#pragma endregion
+
+#pragma	region 가위바위보(랜덤만들기)
+//#include<iostream>
+//using namespace std;
+//
+//const int ROCK = 1;
+//const int SCISSORS = 2;
+//const int PAPER = 3;
+//
+//int main()
+//{
+//	// 시드값 설정
+//	srand(unsigned int(time(0))); 
+//
+//	//rand(); // 0~32767
+//	//rand() % 3; // 0~2
+//	int value = 1+ (rand() % 3); // 1~3 (가위바위보)
+//
+//	int wins = 0;
+//	int totalGame = 0;
+//
+//	while (true)
+//	{
+//		cout << "바위(1) 가위(2) 보(3) 골라주세요!" << endl;
+//		
+//		cout << "> ";
+//
+//		if (totalGame != 0)
+//		{
+//			cout << "현재승률 : "<< (wins * 100) / totalGame << endl;
+//		}
+//		else
+//			cout << "현재승률 : 없음" << endl;
+//		
+//		int computer = 1 + (rand() % 3); // 1~3 (가위바위보)
+//		int input;
+//		cin >> input;
+//
+//		switch (input)
+//		{
+//		case ROCK:
+//			if (computer == ROCK)
+//				cout << "바위(님) vs 바위(컴퓨터) 비겼습니다";
+//			else if (computer == SCISSORS)
+//			{
+//				cout << "바위(님) vs 가위(컴퓨터) 이겼습니다";
+//				wins += 1;
+//			}
+//				
+//			else
+//				cout << "바위(님) vs 보(컴퓨터) 졌습니다";
+//			break;
+//		case SCISSORS:
+//			if (computer == ROCK)
+//				cout << "가위(님) vs 바위(컴퓨터) 졌습니다";
+//			else if (computer == SCISSORS)
+//				cout << "가위(님) vs 가위(컴퓨터) 비겼습니다";
+//			else
+//			{
+//				cout << "가위(님) vs 보(컴퓨터) 이겼습니다";
+//				wins++;
+//			}
+//			break;
+//		case PAPER:
+//			if (computer == ROCK)
+//			{
+//				cout << "보(님) vs 바위(컴퓨터) 이겼습니다";
+//				wins++;
+//			}
+//			else if (computer == SCISSORS)
+//				cout << "보(님) vs 가위(컴퓨터) 졌습니다";
+//			else
+//				cout << "보(님) vs 보(컴퓨터) 비겼습니다";
+//			break;
+//		default:
+//			break;
+//		}
+//		totalGame++;
+//		cout << endl;
+//		cout << endl;
+//		
+//
+//		if (input > 3 || input < 1)
+//		{
+//			cout << "게임을 끝냈습니다!" << endl;
+//			break;
+//		}
+//	}
+//
+//
+//	return 0 ;
+//}
+
+#pragma endregion
+
+#pragma region 열거형
+//#include<iostream>
+//using namespace std;
+//
+//// const int 이런것들은 상수인건 알겠는데 너무 따로노는 느낌
+//// const 는 초기값을 정해야 했음
+//// 하나의 세트로 관리
+//
+//// 숫자를 지정 안하면 0부터 시작
+//// 나머지 값들은 이전값부터 ++
+//enum ENUM_SRP
+//{
+//	ENUM_SCISSORS = 1,
+//	ENUM_ROCK,
+//	ENUM_PAPER,
+//};
+//
+//// #이 붙은거 -> 전처리 지시문 (전처리단계에서) - 코드 바꿔치기
+//// ㄴ#include<iostream> 이라는 파일을 찾아서 복붙해줘!
+//// ㄴ빌드단계 : 1) 전처리(기초작업) 2) 컴파일(통역사) 3) 링크 (오브젝트파일 엮기)
+//#define DEFINE_SCISSORS 1 // #define 매크로 만들기 
+//#define DEFINE_TEST cout << "Hello World" << endl; // #define 매크로 만들기 
+//
+//int main()
+//{
+//	DEFINE_TEST;
+//	return 0;
+//}
+#pragma endregion 
+
+#pragma region 함수
+//함수 : 프로시져, 메소드(C#), 함수, 루틴 다양하게 불림
+
+//int MultbyInt(int a, int b)
+//{
+//	return a * b;
+//}
+//
+//// 디버그 : f10 -> 함수단위건너뜀, f11-> 한 줄 한 줄
+//int main()
+//{
+//	int result = MultbyInt(2, 3);
+//	return 0;
+//}
+
+#pragma endregion
+
+// 구조체 크기는 자료형의 합 크기 아님.. 패딩
+
+#pragma region 포인터
+#include<iostream>
+using namespace std;
 
 int main()
 {
-
 	return 0;
 }
-
 #pragma endregion
