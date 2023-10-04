@@ -565,11 +565,172 @@
 // 구조체 크기는 자료형의 합 크기 아님.. 패딩
 
 #pragma region 포인터
-#include<iostream>
-using namespace std;
-
-int main()
-{
-	return 0;
-}
+//#include<iostream>
+//using namespace std;
+//void SetHP(int* hp)
+//{
+//	*hp = 100;
+//}
+//int main()
+//{
+//	int number = 1;
+//	// TYPE* 변수이름;
+//	// 일단 2가지 요소
+//	// - TYPE
+//	// - *
+//
+//	// 다른 타입처럼 바구니는 바구니인데..
+//	// [주소를 저장하는 바구니이다!!]
+//	// 변수 선언할 때 * 등장했다 -> 포인터 -> 포인터는 주소를 떠올리면됨.
+//	// ex) 포인터라는 바구니는 4바이트(x84 32비트환경) or 8바이트(x64환경) 고정 크기(int*건 char*건 상관없음)
+//
+//	// 포탈을 타고 순간이동 한다고 생각하자.
+//	// *이 여러번 등장하니 헷갈리는데, 사용시점에 따라서 구분해서 기억하자.
+//	// - 변수선언(주소를 저장하는 바구니다!)
+//	// - 사용할 때(포탈 타고 순간이동!)
+//	int* ptr = &number;
+//	*ptr = 4;
+//	int value = *ptr;
+//	cout << number << ' ' << *ptr << endl;
+//
+//	// TYPE(int)은 왜 붙여줄까?
+//	// 4 or 8바이트 고정인데 왜..?
+//	// 포인터에 대한 추가 정보	
+//	// 주소에 가면 뭐가 있는데?
+//	// ex) 결혼식 청첩장에 있는 주소 -> 예식장 주소
+//	// ex) 명함에 있는 주소 -> 회사 주소
+//	
+//	// 타입의 불일치 테스트
+//	__int64* ptr2 = (__int64*)&number;
+//
+//	int hp = 1;
+//	cout << "before SetHP() hp : " << hp << endl;
+//	SetHP(&hp);
+//	cout << "after SetHP() hp : " << hp << endl;
+//	return 0;
+//}
 #pragma endregion
+
+#pragma region 포인터 연산
+//#include<iostream>
+//using namespace std;
+//
+//struct Player
+//{
+//	int hp;
+//	int damage;
+//};
+//
+//// 포인터 연산
+//// 1) 주소 연산자(&)
+//// 2) 산술 연산자(+ -)
+//// 3) 간접 연산자
+//// 4) 간접 멤버 연산자
+//
+//int main()
+//{
+//	int number = 1;
+//
+//	// 1) 주소 연산자 (&)
+//	// - 해당 변수의 주소를 알려주세요~
+//	// - 더 정확히 말하면 해당 변수 타입에 따라서 TYPE* 반환
+//	int* pointer = &number;
+//	
+//	// 2) 산술 연산자(+ -) // 배열 때문에 사용.
+//	number += 1; // 1 증가함
+//
+//	// int*
+//	// - * -> 포인터 타입이네! (8바이트) 주소를 담는 바구니!
+//	// - int : 주소를 따라가면 int가 있다고 가정해라!
+//
+//	// [!] 포인터에서 +나 -등 산술 연산으로 1을 더하거나 빼면
+//	// 정말 '그 숫자'를 더하고 빼라는 의미가 아니다.
+//	// 한번에 TYPE의 크기만큼 이동하라!
+//	// 다음 바구니로 이동시켜줘 라고 생각해야함
+//	// 즉 1을 더하면 -> 바구니 1개 이동시켜줘
+//	// 3을더하면 -> 바구니 3개 이동시켜줘
+//	pointer += 1; // 4 * 1증가함.(int 크기만큼)
+//
+//	// 3) 간접 연산자(*)
+//	// - 포탈 타고 해당 주소로 슝~ 이동
+//	*pointer = 3;
+//
+//	
+//	Player player;
+//	player.hp = 100;
+//	player.damage = 10;
+//
+//	Player* playerPtr = &player;
+//	(*playerPtr).hp = 200;
+//	(*playerPtr).damage = 20;
+//
+//	// 4) 간접 멤버 연산자 (->)
+//	// * : 간접 연산자 ( 포탈타고 해당 주소로 gogo )
+//	// . : 구조체의 특정 멤버를 다룰때 사용
+//	// ->는 *와 .을 합친것
+//	playerPtr->hp = 180;
+//	playerPtr->damage = 80;
+//
+//
+//	return 0;
+//}
+#pragma endregion
+
+#pragma region 포인터 실습
+//#include<iostream>
+//using namespace std;
+//struct StatInfo
+//{
+//	int hp; // +0(메모리 위치)
+//	int attack; // +4
+//	int defence; // +8
+//};
+//
+//void EnterLobby();
+//StatInfo CreatePlayer();
+//void CreateMonster(StatInfo* info);
+//
+//int main()
+//{
+//	EnterLobby();
+//	return 0;
+//}
+//#pragma endregion
+//
+//void EnterLobby()
+//{
+//	cout << "로비에 입장 했습니다." << endl;
+//
+//	StatInfo player;
+//	player.hp = 0xbbbbbbbb;
+//	player.attack = 0xbbbbbbbb;
+//	player.defence = 0xbbbbbbbb;
+//	player = CreatePlayer();
+//
+//	StatInfo monster;
+//	monster.hp = 0xbbbbbbbb;
+//	monster.attack = 0xbbbbbbbb;
+//	monster.defence = 0xbbbbbbbb;
+//	CreateMonster(&monster);
+//}
+//
+//StatInfo CreatePlayer()
+//{
+//	StatInfo ret;
+//	cout << "플레이어 생성" << endl;
+//	ret.hp = 100;
+//	ret.attack = 10;
+//	ret.defence = 2;
+//	return ret;
+//}
+//
+//void CreateMonster(StatInfo* info)
+//{
+//	cout << "몬스터 생성" << endl;
+//
+//	info->hp = 40;
+//	info->attack = 8;
+//	info->defence = 1;
+//
+//}
+#pragma endregion 
