@@ -175,6 +175,11 @@
 #include<iostream>
 using namespace std;
 
+void ArrFunction(char arr[])
+{
+	arr[0] = 'E';
+}
+
 // 포인터 vs 배열
 int main()
 {
@@ -184,6 +189,8 @@ int main()
 	
 	char test2[] = "Hello World";
 	
+	ArrFunction(test2);
+	cout << test2 << endl; // 바뀐다
 	return 0;
 }
 #pragma endregion
