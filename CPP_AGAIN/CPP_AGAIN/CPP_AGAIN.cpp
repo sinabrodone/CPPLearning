@@ -191,6 +191,8 @@ int main()
 	
 	ArrFunction(test2);
 	cout << test2 << endl; // 바뀐다
+
+	// 잔디 심기를 위한 커밋 테스트 계정 변경했음
 	return 0;
 }
 #pragma endregion
