@@ -1,5 +1,4 @@
-﻿
-#pragma region 포인터 실습
+﻿#pragma region 포인터 실습
 //#include<iostream>
 //using namespace std;
 //struct StatInfo
@@ -102,71 +101,89 @@
 //}
 
 #pragma endregion
+#pragma region 배열
+//#include<iostream>
+//using namespace std;
+//struct StatInfo
+//{
+//	int hp = 0XAAAAAAAA;
+//	int attack = 0XBBBBBBBB;
+//	int defence  = 0XBBBBBBBB;
+//};
+//int main()
+//{
+//	// 배열의 이름은 뭐지?
+//	const int monsterCount = 10;
+//	StatInfo monsters[monsterCount]; // 상수만 배열 개수 가능
+//
+//	// 배열의 이름은 곧 배열의 시작 주소
+//	// 정확히는 시작 위치를 가리키는 Type* 포인터
+//	StatInfo* whoAmI = monsters; // 메모리 주소 검색할때 그냥 monsters로 검색해도 나옴. &monsters가 아니라
+//	
+//	// StatInfo[ ] StatInfo[ ] StatInfo[ ] StatInfo[ ] ....
+//	StatInfo* monster_0 = monsters;
+//	monster_0->hp = 100;
+//	monster_0->attack = 10;
+//	monster_0->defence = 1;
+//
+//	StatInfo* monster_1 =  monster_0 + 1; // 포인터라 다음 주소로! (StatInfo 크기만큼 이동)
+//	monster_1->hp = 200;
+//	monster_1->attack = 20;
+//	monster_1->defence = 2;
+//
+//	//포인터와 참조는 자유자재로 변환 가능
+//	StatInfo& monster_2 = *(monsters + 2);
+//	monster_2.hp = 300;
+//	monster_2.attack = 30;
+//	monster_2.defence = 3;
+//
+//	// 자동화
+//	for (int i = 0; i < 10; i++)
+//	{
+//		StatInfo& monster = *(monsters + i);
+//		monster.hp = 100 *(i + 1);
+//		monster.attack = 10 * (i + 1);
+//		monster.defence = 1 * (i + 1);
+//	}
+//
+//	// 근데 *(monsters + i) 가독성이 안좋음
+//	// 인덱스 사용! [0] ~ [n]
+//	// *(monsters + i) == monsters[i] 
+//	// 인덱스는 0번부터
+//	for (int i = 0; i < 10; i++)
+//	{
+//		monsters[i].hp = 100 * (i + 1);
+//		monsters[i].attack = 10 * (i + 1);
+//		monsters[i].defence = 1 * (i + 1);
+//	}
+//
+//	// 배열 초기화 문법 몇가지 (for문도 가능)
+//	int numbers[5]; // 초기화 안됨. 
+//	int numbers2[5] = {}; // 모두 0으로 초기화
+//	int numbers3[10] = {1,2,3,4,5}; // 1,2,3,4,5 까지는 초기화 나머지는 0으로 초기화
+//	int numbers4[] = {1,2,3,4,5}; // 5개 배열 생성.
+//
+//	char helloString[] = { 'H', 'e', 'l', 'l', 'o', '\0' };
+//	cout << helloString << endl;
+//
+//
+//	return 0;
+//}
+#pragma endregion
 
+#pragma region 포인터 vs 배열
 #include<iostream>
 using namespace std;
-struct StatInfo
-{
-	int hp = 0XAAAAAAAA;
-	int attack = 0XBBBBBBBB;
-	int defence  = 0XBBBBBBBB;
-};
+
+// 포인터 vs 배열
 int main()
 {
-	// 배열의 이름은 뭐지?
-	const int monsterCount = 10;
-	StatInfo monsters[monsterCount]; // 상수만 배열 개수 가능
-
-	// 배열의 이름은 곧 배열의 시작 주소
-	// 정확히는 시작 위치를 가리키는 Type* 포인터
-	StatInfo* whoAmI = monsters; // 메모리 주소 검색할때 그냥 monsters로 검색해도 나옴. &monsters가 아니라
+	// 주소[H][e][l][l][o][][W]....  .data영역에있음 
+	// test1[ 주소 ] << 8바이트크기
+	const char* test1 = "Hello World";
 	
-	// StatInfo[ ] StatInfo[ ] StatInfo[ ] StatInfo[ ] ....
-	StatInfo* monster_0 = monsters;
-	monster_0->hp = 100;
-	monster_0->attack = 10;
-	monster_0->defence = 1;
-
-	StatInfo* monster_1 =  monster_0 + 1; // 포인터라 다음 주소로! (StatInfo 크기만큼 이동)
-	monster_1->hp = 200;
-	monster_1->attack = 20;
-	monster_1->defence = 2;
-
-	//포인터와 참조는 자유자재로 변환 가능
-	StatInfo& monster_2 = *(monsters + 2);
-	monster_2.hp = 300;
-	monster_2.attack = 30;
-	monster_2.defence = 3;
-
-	// 자동화
-	for (int i = 0; i < 10; i++)
-	{
-		StatInfo& monster = *(monsters + i);
-		monster.hp = 100 *(i + 1);
-		monster.attack = 10 * (i + 1);
-		monster.defence = 1 * (i + 1);
-	}
-
-	// 근데 *(monsters + i) 가독성이 안좋음
-	// 인덱스 사용! [0] ~ [n]
-	// *(monsters + i) == monsters[i] 
-	// 인덱스는 0번부터
-	for (int i = 0; i < 10; i++)
-	{
-		monsters[i].hp = 100 * (i + 1);
-		monsters[i].attack = 10 * (i + 1);
-		monsters[i].defence = 1 * (i + 1);
-	}
-
-	// 배열 초기화 문법 몇가지 (for문도 가능)
-	int numbers[5]; // 초기화 안됨. 
-	int numbers2[5] = {}; // 모두 0으로 초기화
-	int numbers3[10] = {1,2,3,4,5}; // 1,2,3,4,5 까지는 초기화 나머지는 0으로 초기화
-	int numbers4[] = {1,2,3,4,5}; // 5개 배열 생성.
-
-	char helloString[] = { 'H', 'e', 'l', 'l', 'o', '\0' };
-	cout << helloString << endl;
-
-
+	char test2[] = "Hello World";
+	
 	return 0;
 }
+#pragma endregion
