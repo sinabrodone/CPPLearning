@@ -170,29 +170,91 @@
 //	return 0;
 //}
 #pragma endregion
-
-#pragma region 포인터 vs 배열
 #include<iostream>
 using namespace std;
 
-void ArrFunction(char arr[])
+void Swap(int& a, int& b)
 {
-	arr[0] = 'E';
+	int temp = a;
+	a = b;
+	b = temp;
 }
 
-// 포인터 vs 배열
+//void Sort(int numbers[], int count)
+//{
+//	for (int i = 0; i < count-1; i++)
+//	{
+//		for (int j = i + 1; j < count; j++)
+//		{
+//			if (numbers[i] > numbers[j])
+//				Swap(numbers[i], numbers[j]);
+//		}
+//	}
+//}
+
+void Sort(int numbers[], int count)
+{
+	int best = 0;
+	for (int i= 0; i < count-1; i++)
+	{
+		int best = i;
+		for (int j = i + 1; j < count; j++)
+		{
+			if (numbers[best] > numbers[j])
+				best = j;
+		}
+
+		Swap(numbers[i], numbers[best]);
+	}
+}
+
+void ChooseLotto(int numbers[])
+{
+	// TODO: 랜덤으로 1~45 사이의 숫자 6개 골라주세요! (단, 중복이 없어야함)
+	
+	int count = 0;
+	while (count != 6)
+	{
+		int randValue = (rand() % 45) + 1;
+		bool isThereNumber = false;
+		for (int i = 0; i < count; i++)
+		{
+			if (numbers[i] == randValue)
+			{
+				isThereNumber = true;
+				break;
+			}
+		}
+
+		if (isThereNumber == false)
+		{
+			numbers[count] = randValue;
+			count++;
+		}
+	}
+
+	Sort(numbers, 6);
+	
+}
+
 int main()
 {
-	// 주소[H][e][l][l][o][][W]....  .data영역에있음 
-	// test1[ 주소 ] << 8바이트크기
-	const char* test1 = "Hello World";
-	
-	char test2[] = "Hello World";
-	
-	ArrFunction(test2);
-	cout << test2 << endl; // 바뀐다
+	srand(unsigned int(time(NULL)));
 
-	// 잔디 심기를 위한 커밋 테스트 계정 변경했음
+	int a = 1;
+	int b = 2;
+	Swap(a, b);
+
+	// 2) 정렬 함수 만들기(작은 숫자가 먼저 오도록 정렬)
+	int numbers[6] = { 1,42,3,15,5,6 };
+	int arrSize = sizeof(numbers) / sizeof(int);
+	Sort(numbers, arrSize);
+
+	ChooseLotto(numbers);
+
+	for (int i = 0; i < 6; i++)
+		cout << numbers[i] << " ";
+
 	return 0;
 }
 #pragma endregion
