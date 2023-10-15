@@ -173,87 +173,26 @@
 #include<iostream>
 using namespace std;
 
-void Swap(int& a, int& b)
+void SetMessage(const char* a)
 {
-	int temp = a;
-	a = b;
-	b = temp;
+
 }
 
-//void Sort(int numbers[], int count)
-//{
-//	for (int i = 0; i < count-1; i++)
-//	{
-//		for (int j = i + 1; j < count; j++)
-//		{
-//			if (numbers[i] > numbers[j])
-//				Swap(numbers[i], numbers[j]);
-//		}
-//	}
-//}
-
-void Sort(int numbers[], int count)
+void SetMessage(const char** a)
 {
-	int best = 0;
-	for (int i= 0; i < count-1; i++)
-	{
-		int best = i;
-		for (int j = i + 1; j < count; j++)
-		{
-			if (numbers[best] > numbers[j])
-				best = j;
-		}
-
-		Swap(numbers[i], numbers[best]);
-	}
-}
-
-void ChooseLotto(int numbers[])
-{
-	// TODO: 랜덤으로 1~45 사이의 숫자 6개 골라주세요! (단, 중복이 없어야함)
-	
-	int count = 0;
-	while (count != 6)
-	{
-		int randValue = (rand() % 45) + 1;
-		bool isThereNumber = false;
-		for (int i = 0; i < count; i++)
-		{
-			if (numbers[i] == randValue)
-			{
-				isThereNumber = true;
-				break;
-			}
-		}
-
-		if (isThereNumber == false)
-		{
-			numbers[count] = randValue;
-			count++;
-		}
-	}
-
-	Sort(numbers, 6);
-	
+	*a = "Bye";
 }
 
 int main()
 {
-	srand(unsigned int(time(NULL)));
+	const char* msg = "Hello";
 
-	int a = 1;
-	int b = 2;
-	Swap(a, b);
+	//										  //함수내부	
+	//[매개변수][RET][지역변수(msg(Hello주소))] [매개변수(a(&msg)][RET][지역변수]
+	SetMessage(&msg);
+	cout << msg << endl; 
 
-	// 2) 정렬 함수 만들기(작은 숫자가 먼저 오도록 정렬)
-	int numbers[6] = { 1,42,3,15,5,6 };
-	int arrSize = sizeof(numbers) / sizeof(int);
-	Sort(numbers, arrSize);
-
-	ChooseLotto(numbers);
-
-	for (int i = 0; i < 6; i++)
-		cout << numbers[i] << " ";
+	const char** pp = &msg;
 
 	return 0;
 }
