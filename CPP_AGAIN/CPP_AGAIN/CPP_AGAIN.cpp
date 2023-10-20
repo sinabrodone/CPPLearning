@@ -173,26 +173,10 @@
 #include<iostream>
 using namespace std;
 
-void SetMessage(const char* a)
-{
 
-}
-
-void SetMessage(const char** a)
-{
-	*a = "Bye";
-}
 
 int main()
 {
-	const char* msg = "Hello";
-
-	//										  //함수내부	
-	//[매개변수][RET][지역변수(msg(Hello주소))] [매개변수(a(&msg)][RET][지역변수]
-	SetMessage(&msg);
-	cout << msg << endl; 
-
-	const char** pp = &msg;
 
 	return 0;
 }
